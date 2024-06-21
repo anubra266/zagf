@@ -1,7 +1,9 @@
+import { pkg } from "zagf"
+
 const Page = () => {
   return (
-    <div >
-      <h2>Zagf + React</h2>
+    <div>
+      <h2>{pkg} + React</h2>
     </div>
   )
 }

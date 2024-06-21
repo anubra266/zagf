@@ -1,9 +1,6 @@
-import { dataAttr } from "@zag-js/dom-query"
-import { routesData } from "@zag-js/shared"
-import "@zag-js/shared/src/style.css"
 import { AppProps } from "next/app"
 import Head from "next/head"
-import Link from "next/link"
+import { pkg } from "zagf"
 
 export default function App({ Component, pageProps, router }: AppProps) {
   return (
@@ -13,17 +10,8 @@ export default function App({ Component, pageProps, router }: AppProps) {
       </Head>
 
       <aside className="nav">
-        <header>Zagjs</header>
-        {routesData
-          .sort((a, b) => a.label.localeCompare(b.label))
-          .map((route) => {
-            const active = router.pathname === route.path
-            return (
-              <Link data-active={dataAttr(active)} href={route.path} key={route.label} passHref>
-                {route.label}
-              </Link>
-            )
-          })}
+        <header>{pkg}</header>
+        {router.pathname}
       </aside>
       <Component {...pageProps} />
     </div>
