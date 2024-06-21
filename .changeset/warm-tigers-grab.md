@@ -2,4 +2,4 @@
 "zagf": patch
 ---
 
-Hoard package
+Hoard package on npm
