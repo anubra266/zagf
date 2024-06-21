@@ -1,0 +1,65 @@
+import { defineConfig } from "@playwright/test"
+
+const CI = !!process.env.CI
+
+export function getWebServer() {
+  const framework = process.env.FRAMEWORK || "react"
+  const frameworks = {
+    react: {
+      cwd: "./examples/next-ts",
+      command: "cross-env PORT=3000 pnpm dev",
+      url: "http://localhost:3000",
+      reuseExistingServer: !CI,
+    },
+    // vue: {
+    //   cwd: "./examples/vue-ts",
+    //   command: "pnpm vite --port 3001",
+    //   url: "http://localhost:3001",
+    //   reuseExistingServer: !CI,
+    // },
+    // solid: {
+    //   cwd: "./examples/solid-ts",
+    //   command: "pnpm vite --port 3002",
+    //   url: "http://localhost:3002",
+    //   reuseExistingServer: !CI,
+    // },
+  }
+
+  return frameworks[framework]
+}
+
+const webServer = getWebServer()
+
+export default defineConfig({
+  testDir: "./e2e",
+  outputDir: "./e2e/results",
+  testMatch: "*.e2e.ts",
+  fullyParallel: !CI,
+  timeout: 30_000,
+  expect: { timeout: 10_000 },
+  forbidOnly: !!CI,
+  reportSlowTests: null,
+  retries: CI ? 2 : 0,
+  workers: process.env.CI ? 1 : undefined,
+  reporter: [
+    process.env.CI ? ["github", ["junit", { outputFile: "e2e/junit.xml" }]] : ["list"],
+    ["html", { outputFolder: "e2e/report", open: "never" }],
+  ],
+  webServer,
+  use: {
+    baseURL: webServer.url,
+    trace: "retain-on-failure",
+    screenshot: "only-on-failure",
+    video: "retain-on-failure",
+    locale: "en-US",
+    timezoneId: "GMT",
+  },
+})
+
+declare global {
+  namespace NodeJS {
+    interface ProcessEnv {
+      FRAMEWORK: string
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "name": "zagf",
+  "version": "0.0.0",
+  "description": "Agnostic form library through finite state machines",
+  "keywords": [
+    "js",
+    "machine",
+    "xstate",
+    "statechart",
+    "component",
+    "zagjs",
+    "form"
+  ],
+  "author": "Abraham Aremu <anubra266@gmail.com>",
+  "homepage": "https://github.com/anubra266/zagf#readme",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "repository": "https://github.com/anubra266/zagf/tree/main/package",
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "lint": "eslint src --ext .ts,.tsx",
+    "typecheck": "tsc --noEmit",
+    "prepack": "clean-package",
+    "postpack": "clean-package restore"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "bugs": {
+    "url": "https://github.com/anubra266/zagf/issues"
+  },
+  "dependencies": {
+    "@zag-js/anatomy": "latest",
+    "@zag-js/core": "latest",
+    "@zag-js/dom-query": "latest",
+    "@zag-js/utils": "latest",
+    "@zag-js/types": "latest"
+  },
+  "devDependencies": {
+    "clean-package": "2.2.0"
+  },
+  "clean-package": "../clean-package.config.json"
+}

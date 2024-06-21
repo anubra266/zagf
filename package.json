@@ -1,0 +1,62 @@
+{
+  "name": "zagf-repo",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anubra266/zagf.git"
+  },
+  "author": "Abraham Aremu <anubra266@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "package": "pnpm --filter=./package",
+    "build": "pnpm package -- build",
+    "prepare": "husky install",
+    "clean-pkgs": "pnpm -r exec rm -rf dist .swc *.log",
+    "clean": "pnpm clean-pkgs && rm -rf node_modules",
+    "react": "pnpm --filter \"./examples/next-ts\"",
+    "typecheck": "pnpm package -- typecheck",
+    "prettier": "prettier --check package/*",
+    "prettier-fix": "prettier --write package/*",
+    "lint": "eslint package --ext .ts",
+    "version": "changeset version",
+    "release": "changeset publish",
+    "test": "vitest",
+    "website": "pnpm --filter=./website"
+  },
+  "lint-staged": {
+    "**/*.{ts,tsx,js,jsx}": "prettier --write"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "dependencies": {
+    "@changesets/changelog-github": "0.5.0",
+    "@changesets/cli": "2.27.5",
+    "@commitlint/cli": "19.3.0",
+    "@commitlint/config-conventional": "19.2.2",
+    "@playwright/test": "1.44.1",
+    "@types/node": "20.14.2",
+    "@typescript-eslint/eslint-plugin": "7.13.1",
+    "@typescript-eslint/parser": "7.13.1",
+    "commitlint": "19.3.0",
+    "eslint": "8.57.0",
+    "husky": "9.0.11",
+    "lint-staged": "15.2.7",
+    "prettier": "3.3.2",
+    "tsup": "8.1.0",
+    "typescript": "5.4.5",
+    "vite": "5.3.1",
+    "vite-plugin-dts": "3.9.1",
+    "vitest": "1.6.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "packageManager": "pnpm@9.4.0",
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "prettier-plugin-svelte": "^3.2.5"
+  }
+}
