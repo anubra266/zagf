@@ -117,19 +117,19 @@ importers:
     dependencies:
       '@zag-js/anatomy':
         specifier: latest
-        version: 0.64.0
+        version: 0.65.0
       '@zag-js/core':
         specifier: latest
-        version: 0.64.0
+        version: 0.65.0
       '@zag-js/dom-query':
         specifier: latest
-        version: 0.64.0
+        version: 0.65.0
       '@zag-js/types':
         specifier: latest
-        version: 0.64.0
+        version: 0.65.0
       '@zag-js/utils':
         specifier: latest
-        version: 0.64.0
+        version: 0.65.0
     devDependencies:
       clean-package:
         specifier: 2.2.0
@@ -141,8 +141,8 @@ importers:
         specifier: 0.7.2
         version: 0.7.2
       lucide-react:
-        specifier: 0.424.0
-        version: 0.424.0(react@18.3.1)
+        specifier: 0.427.0
+        version: 0.427.0(react@18.3.1)
       next:
         specifier: 14.2.5
         version: 14.2.5(@playwright/test@1.45.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -1091,23 +1091,23 @@ packages:
   '@vue/shared@3.4.29':
     resolution: {integrity: sha512-hQ2gAQcBO/CDpC82DCrinJNgOHI2v+FA7BDW4lMSPeBpQ7sRe2OLHWe5cph1s7D8DUQAwRt18dBDfJJ220APEA==}
 
-  '@zag-js/anatomy@0.64.0':
-    resolution: {integrity: sha512-zyOUtKAm2n2Ysqqlia/f5j4Qmi+CnFAfymFexW2aWdemhlMLOAu5T9uONH76fgrV1zE81mGzXsXK0/KWtgEaAw==}
+  '@zag-js/anatomy@0.65.0':
+    resolution: {integrity: sha512-P9SVWgx5ngwYGKODNBMLH6chk9AKq4CrLRawH1KXK0gISsolQG+8yWyok5E9sdPc6UkV6eI+5k8T/teIrOfuOw==}
 
-  '@zag-js/core@0.64.0':
-    resolution: {integrity: sha512-430n6hSSAFgVVS+5sf64HZwT5OWEbsiny/sROtHjntikFidHHXg1IBvsfu6gEBlRMDw95wtSvmyJENfYENSVgg==}
+  '@zag-js/core@0.65.0':
+    resolution: {integrity: sha512-LuzfnFbmAyDW7buJn46/j2hO0Qy59NWbgUNFrrvBFrzLiiVKVugwXpdc1J/nPOp+op7oDGP63sxgZuFmMeAEZg==}
 
-  '@zag-js/dom-query@0.64.0':
-    resolution: {integrity: sha512-1NnFveHoCwj9/yk3SpAW0Ri4sK0LAjQtWDhpdycVe1DmvNGD/fGfw9Bk+NL2jyH1HkZGI7LM8vTOojFQE4eR1A==}
+  '@zag-js/dom-query@0.65.0':
+    resolution: {integrity: sha512-ERYyqdvf/+7dS8XxhMA2gKrrdVoyv0LpxwYRSc9PnPE9zo3zUagSsYgVdyG84BU+WpOJyXW3lm/2vYM+LYg82A==}
 
-  '@zag-js/store@0.64.0':
-    resolution: {integrity: sha512-6FB1K/YqKoGguJ4ZcnH2j5jbzjyDB3M+0j8LBChTYT1OvnyXNfLkk1kcQ81OBO1t9bOPaAo6qEzBiq/pd9qvnQ==}
+  '@zag-js/store@0.65.0':
+    resolution: {integrity: sha512-yeF9HrTczp/8cMiJewk+QfLqLg3/1+YQmkJzFwvLb3tU2/WrrUPMMgw112963RQRSzfRDg3HeWkmfw6L5+EBQg==}
 
-  '@zag-js/types@0.64.0':
-    resolution: {integrity: sha512-PsOiyXQYjhJjjBut/29F+/GtoYRoqe8c1LbN9TOupKUQmy0GHHlwqhJ5lwknOTxk3gQ8F/NjUEvRx31cUUTAIQ==}
+  '@zag-js/types@0.65.0':
+    resolution: {integrity: sha512-4GqO0rytOvpR2OamyndPeOcpVcZ6dMmOJgoAuIH2b7K6GtQLgU7lix9eAwlvhZhC2BZm0zOB8QCABNKJ1bRDUg==}
 
-  '@zag-js/utils@0.64.0':
-    resolution: {integrity: sha512-XklPct1OMKgydWE1DIbKIdhZ8Z9R+g/WTo13rg7VSp3aE7lWChNdmyLPIoycNmH4SYcIetFsu6MW3yijkX0DsQ==}
+  '@zag-js/utils@0.65.0':
+    resolution: {integrity: sha512-u7pBhfiUizyiBiOWy8ALeIJT9kPZ5c1gtKSQ1Vjr6Z3WrMYEtCrLPTXhpjgksghcRvYNSKv14M+fKmOO1R9Pgg==}
 
   JSONStream@1.3.5:
     resolution: {integrity: sha512-E+iruNOY8VV9s4JEbe1aNEm6MiszPRr/UfcHMz0TQh1BXSxHK+ASV1R6W4HpjBhSeS+54PIsAMCBmwD06LLsqQ==}
@@ -2269,8 +2269,8 @@ packages:
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0
 
-  lucide-react@0.424.0:
-    resolution: {integrity: sha512-x2Nj2aytk1iOyHqt4hKenfVlySq0rYxNeEf8hE0o+Yh0iE36Rqz0rkngVdv2uQtjZ70LAE73eeplhhptYt9x4Q==}
+  lucide-react@0.427.0:
+    resolution: {integrity: sha512-lv9s6c5BDF/ccuA0EgTdskTxIe11qpwBDmzRZHJAKtp8LTewAvDvOM+pTES9IpbBuTqkjiMhOmGpJ/CB+mKjFw==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0-rc
 
@@ -4225,24 +4225,24 @@ snapshots:
 
   '@vue/shared@3.4.29': {}
 
-  '@zag-js/anatomy@0.64.0': {}
+  '@zag-js/anatomy@0.65.0': {}
 
-  '@zag-js/core@0.64.0':
+  '@zag-js/core@0.65.0':
     dependencies:
-      '@zag-js/store': 0.64.0
+      '@zag-js/store': 0.65.0
       klona: 2.0.6
 
-  '@zag-js/dom-query@0.64.0': {}
+  '@zag-js/dom-query@0.65.0': {}
 
-  '@zag-js/store@0.64.0':
+  '@zag-js/store@0.65.0':
     dependencies:
       proxy-compare: 3.0.0
 
-  '@zag-js/types@0.64.0':
+  '@zag-js/types@0.65.0':
     dependencies:
       csstype: 3.1.3
 
-  '@zag-js/utils@0.64.0': {}
+  '@zag-js/utils@0.65.0': {}
 
   JSONStream@1.3.5:
     dependencies:
@@ -5570,7 +5570,7 @@ snapshots:
     dependencies:
       react: 18.3.1
 
-  lucide-react@0.424.0(react@18.3.1):
+  lucide-react@0.427.0(react@18.3.1):
     dependencies:
       react: 18.3.1
 
