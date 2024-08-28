@@ -1,4 +1,4 @@
-import { createMachine, type StateMachine as S } from "@zag-js/core"
+import { createMachine, type StateMachine as S, guards } from "@zag-js/core"
 import { compact, isFunction } from "@zag-js/utils"
 import type {
   FieldMachineContext,
@@ -10,32 +10,32 @@ import type {
 import { createFieldMachine } from "./field.machine"
 import * as utils from "./form.utils"
 import { nextTick } from "@zag-js/dom-query"
+const { or } = guards
 
 export function createFormmachine<K extends string>(userContext: FormUserDefinedContext<K>) {
   const ctx = compact(userContext)
 
   const FIELD_EVENTS: S.TransitionDefinitionMap<FormMachineContext<K>, FormMachineState, any> = {
     "FIELD.CHANGE": [
-      //   {
-      // validate if validate on change is active
-      //   },
+      {
+        guard: or("validateAll", "validateChange"),
+        actions: ["changeField", "validate"],
+      },
       {
         actions: ["changeField"],
       },
     ],
     "FIELD.BLUR": [
-      //   {
-      // validate if validate on blur is active
-      //   },
+      {
+        guard: or("validateAll", "validateBlur"),
+        actions: ["blurField", "validate"],
+      },
       {
         actions: ["blurField"],
       },
     ],
     "FIELD.FOCUS": {
       actions: ["focusField"],
-    },
-    "FIELD.VALIDATE": {
-      // actions: ["validate"],
     },
   }
 
@@ -49,8 +49,7 @@ export function createFormmachine<K extends string>(userContext: FormUserDefined
       context: {
         defaultValues: () => ({}) as Record<K, any>,
         fields: {} as Record<K, any>,
-        // validating: false,
-
+        validation: "all",
         ...ctx,
       },
 
@@ -71,11 +70,13 @@ export function createFormmachine<K extends string>(userContext: FormUserDefined
         initialized: {
           on: {
             ...FIELD_EVENTS,
-            SUBMIT: "submitting",
+            SUBMIT: [
+              { guard: or("validateAll", "validateSubmit"), target: "submitting", actions: ["validate"] },
+              { target: "submitted" },
+            ],
           },
         },
         submitting: {
-          entry: ["validate"],
           on: {
             SUBMITTED: {
               target: "submitted",
@@ -93,7 +94,12 @@ export function createFormmachine<K extends string>(userContext: FormUserDefined
       },
     },
     {
-      guards: {},
+      guards: {
+        validateAll: (ctx) => ctx.validation === "all",
+        validateSubmit: (ctx) => ctx.validation === "submit",
+        validateBlur: (ctx) => ctx.validation === "blur",
+        validateChange: (ctx) => ctx.validation === "change",
+      },
 
       actions: {
         resetErrors(ctx) {
@@ -107,12 +113,15 @@ export function createFormmachine<K extends string>(userContext: FormUserDefined
             for (const key in ctx.fields) {
               ctx.fields[key].send({ type: "VALIDATE", validator: ctx.validate?.[key] })
             }
-            if (utils.hasError(ctx.fields)) send("ABORT")
+            if (utils.hasError(ctx.fields)) nextTick(() => send("ABORT"))
             else {
               const values = utils.getFieldValues(ctx.fields)
               evt.cb?.(values)
               send("SUBMITTED")
             }
+          } else {
+            const field = (ctx.fields as any)[evt.name]
+            field.send({ type: "VALIDATE", validator: (ctx.validate as any)?.[evt.name] })
           }
         },
 

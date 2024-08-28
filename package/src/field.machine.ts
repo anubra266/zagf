@@ -1,7 +1,7 @@
 import { createMachine } from "@zag-js/core"
 import { compact } from "@zag-js/utils"
 import type { FieldMachineContext, FieldMachineEvent, FieldMachineState, FieldUserDefinedContext } from "./form.types"
-import { equal } from "./form.utils"
+import * as utils from "./form.utils"
 
 export function createFieldMachine(userContext: FieldUserDefinedContext) {
   const ctx = compact(userContext)
@@ -55,11 +55,22 @@ export function createFieldMachine(userContext: FieldUserDefinedContext) {
           if (evt.type !== "VALIDATE") return
           ctx.validating = true
 
-          // TODO try to do validation set from field context
-          // We want to check if there's a validator in event first, prefer it over the one in field context
-          if (evt.validator) ctx.error = evt.validator(ctx.value)
+          const validate = evt.validator ?? ctx.validate
+          if (!validate) return
 
-          ctx.validating = false
+          const validated = validate(ctx.value)
+          if (utils.isPromise(validated)) {
+            validated.then((error) => {
+              // TODO remove
+              // console.log("validate promise", error)
+
+              ctx.error = error
+              ctx.validating = false
+            })
+          } else {
+            ctx.error = validated
+            ctx.validating = false
+          }
         },
         valueChanged(ctx) {
           ctx.dirty = ctx.value !== ctx.defaultValue
@@ -78,7 +89,7 @@ export function createFieldMachine(userContext: FieldUserDefinedContext) {
       },
 
       compareFns: {
-        value: (prev, current) => equal(prev, current),
+        value: (prev, current) => utils.equal(prev, current),
       },
     },
   )

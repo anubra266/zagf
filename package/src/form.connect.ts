@@ -28,8 +28,8 @@ export function formConnect<K extends string, T extends PropTypes>(
 
     getFieldProps: (name, options) => {
       const field = state.context.fields[name]
-      // try setting validation here
       if (!loading && !field) throw new Error(`Add ${name} in values`)
+      field.setContext({ validate: options?.validate })
 
       return normalize.element({
         name,

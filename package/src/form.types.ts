@@ -4,17 +4,26 @@ import type { JSX } from "@zag-js/types"
 
 interface FieldOptions {
   type?: string
+  validate?: ValidatorFn
 }
 
-type ValidatorFn = (value: any) => string | null
-type ValidateRules<K extends string> = Record<K, ValidatorFn>
+type ValiidatorResult = string | null | Promise<string | null>
+type ValidatorFn = (value: any) => ValiidatorResult
+type ValidateRules<K extends string> = Partial<Record<K, ValidatorFn>>
 
 /* -----------------------------------------------------------------------------
  * Field Machine context
  * -----------------------------------------------------------------------------*/
 
 interface FieldPublicContext extends DirectionProperty, CommonProperties {
+  /**
+   * The value of the field
+   */
   value?: any
+  /**
+   * Validation rule for the field
+   */
+  validate?: ValidatorFn
 }
 
 export type FieldUserDefinedContext = RequiredBy<FieldPublicContext, "id">
@@ -41,7 +50,7 @@ interface FieldPrivateContext {
   dirty?: boolean
   /**
    * @internal
-   * The initial value of the field
+   * The default value of the field
    */
   defaultValue?: any
   /**
@@ -94,6 +103,11 @@ interface FormPublicContext<K extends string> extends DirectionProperty, CommonP
    * Validation rules for the form
    */
   validate?: ValidateRules<K>
+  /**
+   * When validation gets triggered
+   * @default "all"
+   */
+  validation: "change" | "submit" | "blur" | "all"
 }
 
 export type FormUserDefinedContext<K extends string> = RequiredBy<FormPublicContext<K>, "id">

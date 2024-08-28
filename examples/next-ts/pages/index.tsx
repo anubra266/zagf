@@ -4,6 +4,17 @@ import { useId } from "react"
 import { StateVisualizer } from "../components/state-visualizer"
 
 // form.queryselector... by name: to get inputs
+// validations schemas (zod / valibot)
+// dependent fields (start/end dates) validation
+// auto-focus on error
+
+function validateAsync(value: string): Promise<string | null> {
+  return new Promise((resolve) => {
+    window.setTimeout(() => {
+      resolve(value === "mantine" ? null : 'Value must be "mantine"')
+    }, 800)
+  })
+}
 
 const Page = () => {
   const [state, send] = useMachine(
@@ -12,6 +23,7 @@ const Page = () => {
       defaultValues: { name: "zag", email: "" },
       validate: {
         name: (value) => (value.length < 2 ? "Name must have at least 2 letters" : null),
+        // name:validateAsync,
         email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
       },
     }),
