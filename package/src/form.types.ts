@@ -94,7 +94,16 @@ export type FieldService = Machine<FieldMachineContext, FieldMachineState, Field
  * Form Machine context
  * -----------------------------------------------------------------------------*/
 
+export type ElementIds<K> = Partial<{
+  form: string
+  field(name: K): string
+}>
+
 interface FormPublicContext<K extends string> extends DirectionProperty, CommonProperties {
+  /**
+   * The ids of the elements in the form. Useful for composition.
+   */
+  ids?: ElementIds<K>
   /**
    * The default values of the fields in the form
    */
@@ -108,6 +117,11 @@ interface FormPublicContext<K extends string> extends DirectionProperty, CommonP
    * @default "all"
    */
   validation: "change" | "submit" | "blur" | "all"
+  /**
+   * Whether to focus on the first field with error after submitting
+   * @default true
+   */
+  focusOnError?: boolean
 }
 
 export type FormUserDefinedContext<K extends string> = RequiredBy<FormPublicContext<K>, "id">

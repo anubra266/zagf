@@ -4,6 +4,7 @@ import type { NormalizeProps, PropTypes } from "@zag-js/types"
 // import { dom } from "./form.dom"
 import type { FormMachineApi, FormSend, FormState } from "./form.types"
 import * as utils from "./form.utils"
+import { dom } from "./form.dom"
 
 export function formConnect<K extends string, T extends PropTypes>(
   state: FormState<K>,
@@ -32,6 +33,7 @@ export function formConnect<K extends string, T extends PropTypes>(
       field.setContext({ validate: options?.validate })
 
       return normalize.element({
+        id: dom.getFieldId(state.context, name),
         name,
         type: options?.type,
         value: field?.state.context.value ?? "",

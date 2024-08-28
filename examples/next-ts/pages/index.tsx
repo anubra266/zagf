@@ -3,7 +3,7 @@ import { normalizeProps, useMachine } from "@zag-js/react"
 import { useId } from "react"
 import { StateVisualizer } from "../components/state-visualizer"
 
-// form.queryselector... by name: to get inputs
+// form.queryselector... by ids, cause radio can have same name: to get inputs
 // validations schemas (zod / valibot)
 // dependent fields (start/end dates) validation
 // auto-focus on error

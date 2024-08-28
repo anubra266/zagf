@@ -16,6 +16,15 @@ export function getFieldValues<K extends string>(fields: FormMachineContext<K>["
   return values
 }
 
+export function getFirstErrorField<K extends string>(fields: FormMachineContext<K>["fields"]) {
+  for (const key in fields) {
+    if (Object.hasOwnProperty.call(fields, key)) {
+      const error = fields[key].state.context.error
+      if (error) return key
+    }
+  }
+}
+
 export function getErrors<K extends string>(fields: FormMachineContext<K>["fields"]) {
   const errors = {} as Record<K, string>
   for (const key in fields) {

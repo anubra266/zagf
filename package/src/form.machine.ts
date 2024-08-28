@@ -10,6 +10,7 @@ import type {
 import { createFieldMachine } from "./field.machine"
 import * as utils from "./form.utils"
 import { nextTick } from "@zag-js/dom-query"
+import { dom } from "./form.dom"
 const { or } = guards
 
 export function createFormmachine<K extends string>(userContext: FormUserDefinedContext<K>) {
@@ -50,6 +51,7 @@ export function createFormmachine<K extends string>(userContext: FormUserDefined
         defaultValues: () => ({}) as Record<K, any>,
         fields: {} as Record<K, any>,
         validation: "all",
+        focusOnError: true,
         ...ctx,
       },
 
@@ -82,7 +84,10 @@ export function createFormmachine<K extends string>(userContext: FormUserDefined
               target: "submitted",
               actions: ["resetErrors"],
             },
-            "SUBMIT.ABORT": "initialized",
+            "SUBMIT.ABORT": [
+              { guard: "shouldFocusOnError", target: "initialized", actions: ["focusOnError"] },
+              { target: "initialized" },
+            ],
           },
         },
         submitted: {
@@ -99,9 +104,15 @@ export function createFormmachine<K extends string>(userContext: FormUserDefined
         validateSubmit: (ctx) => ctx.validation === "submit",
         validateBlur: (ctx) => ctx.validation === "blur",
         validateChange: (ctx) => ctx.validation === "change",
+        shouldFocusOnError: (ctx) => !!ctx.focusOnError,
       },
 
       actions: {
+        focusOnError(ctx) {
+          const fieldName = utils.getFirstErrorField(ctx.fields)
+          const fieldEl = dom.getFieldEl(ctx, fieldName)
+          fieldEl?.focus()
+        },
         resetErrors(ctx) {
           for (const key in ctx.fields) {
             ctx.fields[key].send({ type: "RESET_ERROR" })
