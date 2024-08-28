@@ -17,7 +17,7 @@
     "typecheck": "pnpm package -- typecheck",
     "prettier": "prettier --check package/*",
     "prettier-fix": "prettier --write package/*",
-    "lint": "eslint package --ext .ts",
+    "lint": "eslint package",
     "version": "changeset version",
     "release": "changeset publish",
     "test": "vitest",
