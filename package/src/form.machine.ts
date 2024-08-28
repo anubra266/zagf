@@ -119,9 +119,11 @@ export function createFormmachine<K extends string>(userContext: FormUserDefined
           }
         },
         validate(ctx, evt, { send }) {
+          const values = utils.getFieldValues(ctx.fields)
           if (evt.type === "SUBMIT") {
             for (const key in ctx.fields) {
-              ctx.fields[key].send({ type: "VALIDATE", validator: ctx.validate?.[key] })
+              const field = ctx.fields[key]
+              field.send({ type: "VALIDATE", validator: ctx.validate?.[key], values })
             }
 
             if (utils.hasError(ctx.fields)) nextTick(() => send("SUBMIT.ABORT"))
@@ -130,9 +132,9 @@ export function createFormmachine<K extends string>(userContext: FormUserDefined
               evt.cb?.(values)
               send("SUBMITTED")
             }
-          } else if (evt.type === "FIELD.FOCUS" || evt.type === "FIELD.BLUR") {
-            const field = (ctx.fields as any)[evt.name]
-            field.send({ type: "VALIDATE", validator: (ctx.validate as any)?.[evt.name] })
+          } else if (evt.type === "FIELD.CHANGE" || evt.type === "FIELD.BLUR") {
+            const field = ctx.fields[evt.name]
+            field.send({ type: "VALIDATE", validator: ctx.validate?.[evt.name], values })
           }
         },
 

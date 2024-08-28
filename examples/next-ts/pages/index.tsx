@@ -3,10 +3,9 @@ import { normalizeProps, useMachine } from "@zag-js/react"
 import { useId } from "react"
 import { StateVisualizer } from "../components/state-visualizer"
 
-// form.queryselector... by ids, cause radio can have same name: to get inputs
 // validations schemas (zod / valibot)
 // dependent fields (start/end dates) validation
-// auto-focus on error
+// <Controller thingy for complex fields (Combobox / DatePicker)
 
 function validateAsync(value: string): Promise<string | null> {
   return new Promise((resolve) => {
@@ -22,8 +21,8 @@ const Page = () => {
       id: useId(),
       defaultValues: { name: "zag", email: "" },
       validate: {
-        name: (value) => (value.length < 2 ? "Name must have at least 2 letters" : null),
         // name:validateAsync,
+        name: (value, values) => (value.length < 2 ? "Name must have at least 2 letters" : null),
         email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
       },
     }),

@@ -58,7 +58,7 @@ export function createFieldMachine(userContext: FieldUserDefinedContext) {
           const validate = evt.validator ?? ctx.validate
           if (!validate) return
 
-          const validated = validate(ctx.value)
+          const validated = validate(ctx.value, evt.values ?? {})
           if (utils.isPromise(validated)) {
             validated.then((error) => {
               // TODO remove

@@ -2,14 +2,14 @@ import type { Machine, StateMachine as S } from "@zag-js/core"
 import type { CommonProperties, DirectionProperty, PropTypes, RequiredBy } from "@zag-js/types"
 import type { JSX } from "@zag-js/types"
 
-interface FieldOptions {
+interface FieldOptions<K extends string> {
   type?: string
-  validate?: ValidatorFn
+  validate?: ValidatorFn<K>
 }
 
 type ValiidatorResult = string | null | Promise<string | null>
-type ValidatorFn = (value: any) => ValiidatorResult
-type ValidateRules<K extends string> = Partial<Record<K, ValidatorFn>>
+type ValidatorFn<K extends string = string> = (value: any, values: Record<K, any>) => ValiidatorResult
+type ValidateRules<K extends string> = Partial<Record<K, ValidatorFn<K>>>
 
 /* -----------------------------------------------------------------------------
  * Field Machine context
@@ -74,7 +74,7 @@ export interface FieldMachineState {
 type FieldChangeEvent = { type: "CHANGE"; value: any }
 type FieldFocusEvent = { type: "FOCUS" }
 type FieldBlurEvent = { type: "BLUR" }
-type FieldValidateEvent = { type: "VALIDATE"; validator?: ValidatorFn }
+type FieldValidateEvent = { type: "VALIDATE"; validator?: ValidatorFn; values?: Record<string, any> }
 type FieldResetErrorEvent = { type: "RESET_ERROR" }
 
 export type FieldMachineEvent =
@@ -196,5 +196,5 @@ export interface FormMachineApi<K extends string, T extends PropTypes = PropType
    * Function to submit the form.
    */
   onSubmit<E extends JSX.FormEvent<HTMLFormElement>>(cb: (values: Record<K, any>) => void): (event?: E) => void
-  getFieldProps(name: K, options?: FieldOptions): T["element"]
+  getFieldProps(name: K, options?: FieldOptions<K>): T["element"]
 }
