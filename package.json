@@ -37,7 +37,7 @@
     "@commitlint/cli": "19.4.0",
     "@commitlint/config-conventional": "19.2.2",
     "@playwright/test": "1.46.1",
-    "@types/node": "20.14.2",
+    "@types/node": "20.16.2",
     "@typescript-eslint/eslint-plugin": "7.18.0",
     "@typescript-eslint/parser": "7.18.0",
     "commitlint": "19.4.0",
