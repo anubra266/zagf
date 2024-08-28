@@ -2,6 +2,12 @@
 
 Agnostic form library through finite state machines
 
+## Uhm...
+
+It's quite new, doesn't do much yet. But feel free to remind me of missing features. I'm in the mood. 😉
+
+And sure...you can contribute!
+
 ## Installation
 
 ```bash
