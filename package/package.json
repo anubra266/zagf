@@ -1,6 +1,6 @@
 {
   "name": "zagf",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Agnostic form library through finite state machines",
   "keywords": [
     "js",

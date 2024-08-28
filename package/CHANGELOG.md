@@ -1,5 +1,17 @@
 # zagf
 
+## 0.0.3
+
+### Patch Changes
+
+- [`6eec4d5`](https://github.com/anubra266/zagf/commit/6eec4d53e2c718520cabc591c2ca19ae5a5d6776) Thanks
+  [@anubra266](https://github.com/anubra266)! - Add `focusOnError` option. For configuring whether to focus on the first
+  field with error after submitting
+
+- [`074009e`](https://github.com/anubra266/zagf/commit/074009ea74907738760035dd66d4e3017e75f97b) Thanks
+  [@anubra266](https://github.com/anubra266)! - - Fix change validation
+  - Expose values to validate callbacks
+
 ## 0.0.2
 
 ### Patch Changes
