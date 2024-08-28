@@ -112,12 +112,7 @@ interface FormPublicContext<K extends string> extends DirectionProperty, CommonP
 
 export type FormUserDefinedContext<K extends string> = RequiredBy<FormPublicContext<K>, "id">
 
-type FormComputedContext<K extends string> = Readonly<{
-  /**
-   * The values of the fields in the form
-   */
-  //   values: Record<K, any>
-}>
+type FormComputedContext = Readonly<{}>
 
 interface FormPrivateContext<K extends string> {
   /**
@@ -130,16 +125,30 @@ interface FormPrivateContext<K extends string> {
 export interface FormMachineContext<K extends string>
   extends FormPublicContext<K>,
     FormPrivateContext<K>,
-    FormComputedContext<K> {}
+    FormComputedContext {}
 
 export interface FormMachineState {
   value: "loading" | "initialized" | "submitting" | "submitted"
 }
 
-// type FormChangeEvent<K extends string> = { type: "CHANGE"; value: any; name: K }
+type FormInitializeEvent = { type: "INITIALIZE" }
+type FormInitializedEvent = { type: "INITIALIZED" }
+type FormFieldChangeEvent<K extends string> = { type: "FIELD.CHANGE"; name: K; value: any }
+type FormFieldFocusEvent<K extends string> = { type: "FIELD.FOCUS"; name: K }
+type FormFieldBlurEvent<K extends string> = { type: "FIELD.BLUR"; name: K }
+type FormSubmitEvent<K extends string> = { type: "SUBMIT"; cb: (values: Record<K, any>) => void }
+type FormSubmittedEvent = { type: "SUBMITTED" }
+type FormSubmitAbortEvent = { type: "SUBMIT.ABORT" }
 
-export type FormMachineEvent<K extends string> = any
-// export type FormMachineEvent<K extends string> = FormChangeEvent<K>
+export type FormMachineEvent<K extends string> =
+  | FormInitializeEvent
+  | FormInitializedEvent
+  | FormFieldChangeEvent<K>
+  | FormFieldFocusEvent<K>
+  | FormFieldBlurEvent<K>
+  | FormSubmitEvent<K>
+  | FormSubmittedEvent
+  | FormSubmitAbortEvent
 
 export type FormState<K extends string> = S.State<FormMachineContext<K>, FormMachineState, FormMachineEvent<K>>
 
@@ -150,11 +159,6 @@ export type FormService<K extends string> = Machine<FormMachineContext<K>, FormM
 /* -----------------------------------------------------------------------------
  * Component API
  * -----------------------------------------------------------------------------*/
-
-export interface FieldMachineApi<T extends PropTypes = PropTypes> {
-  getFieldProps(name: any, options?: FieldOptions): T["element"]
-  //   getFieldProps(name: K, options?: FieldOptions): T["element"]
-}
 
 export interface FormMachineApi<K extends string, T extends PropTypes = PropTypes> {
   /**

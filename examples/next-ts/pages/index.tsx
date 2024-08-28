@@ -1,4 +1,4 @@
-import { pkg, form } from "zagf"
+import { form } from "zagf"
 import { normalizeProps, useMachine } from "@zag-js/react"
 import { useId } from "react"
 import { StateVisualizer } from "../components/state-visualizer"
@@ -41,7 +41,7 @@ const Page = () => {
 
   return (
     <div>
-      <h2>{pkg} + React</h2>
+      <h2>zagF + React</h2>
       {/*  */}
 
       <form onSubmit={api.onSubmit((values) => console.log(values))}>

@@ -15,7 +15,7 @@ const { or } = guards
 export function createFormmachine<K extends string>(userContext: FormUserDefinedContext<K>) {
   const ctx = compact(userContext)
 
-  const FIELD_EVENTS: S.TransitionDefinitionMap<FormMachineContext<K>, FormMachineState, any> = {
+  const FIELD_EVENTS: S.TransitionDefinitionMap<FormMachineContext<K>, FormMachineState, FormMachineEvent<K>> = {
     "FIELD.CHANGE": [
       {
         guard: or("validateAll", "validateChange"),
@@ -82,7 +82,7 @@ export function createFormmachine<K extends string>(userContext: FormUserDefined
               target: "submitted",
               actions: ["resetErrors"],
             },
-            ABORT: "initialized",
+            "SUBMIT.ABORT": "initialized",
           },
         },
         submitted: {
@@ -108,32 +108,35 @@ export function createFormmachine<K extends string>(userContext: FormUserDefined
           }
         },
         validate(ctx, evt, { send }) {
-          // TODO Handle both submit, change, blur, guards will decide if they reach here
           if (evt.type === "SUBMIT") {
             for (const key in ctx.fields) {
               ctx.fields[key].send({ type: "VALIDATE", validator: ctx.validate?.[key] })
             }
-            if (utils.hasError(ctx.fields)) nextTick(() => send("ABORT"))
+
+            if (utils.hasError(ctx.fields)) nextTick(() => send("SUBMIT.ABORT"))
             else {
               const values = utils.getFieldValues(ctx.fields)
               evt.cb?.(values)
               send("SUBMITTED")
             }
-          } else {
+          } else if (evt.type === "FIELD.FOCUS" || evt.type === "FIELD.BLUR") {
             const field = (ctx.fields as any)[evt.name]
             field.send({ type: "VALIDATE", validator: (ctx.validate as any)?.[evt.name] })
           }
         },
 
         changeField(ctx, evt) {
-          const field = (ctx.fields as any)[evt.name]
+          if (evt.type !== "FIELD.CHANGE") return
+          const field = ctx.fields[evt.name]
           if (field) field.send({ type: "CHANGE", value: evt.value })
         },
         focusField(ctx, evt) {
+          if (evt.type !== "FIELD.FOCUS") return
           const field = (ctx.fields as any)[evt.name]
           if (field) field.send({ type: "FOCUS" })
         },
         blurField(ctx, evt) {
+          if (evt.type !== "FIELD.BLUR") return
           const field = (ctx.fields as any)[evt.name]
           if (field) field.send({ type: "BLUR" })
         },
