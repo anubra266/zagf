@@ -56,6 +56,10 @@ const App = () => {
 
 ### Validate
 
+Pass a `validate` object to the machine config to validate the form fields.
+
+Right now, it on'y validates on submit. Will add options for other modes in the future (very soon).
+
 ```jsx
 import { form } from "zagf"
 
