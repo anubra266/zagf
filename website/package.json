@@ -20,7 +20,7 @@
   "devDependencies": {
     "@types/form-serialize": "0.7.4",
     "@types/node": "20.14.2",
-    "@types/react": "18.3.4",
+    "@types/react": "18.3.5",
     "@types/react-dom": "18.3.0",
     "eslint-plugin-react": "7.35.0",
     "eslint-plugin-react-hooks": "4.6.2",
